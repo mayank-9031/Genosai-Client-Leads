@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AquaTechnic × GenosAI — Project Progress</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700,800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:    #0A0A0F;
+      --card:  #111118;
+      --text:  #F0EDE8;
+      --white: #FFFFFF;
+      --vp:    #6D28D9;
+      --ve:    rgba(167,139,250,0.70);
+      --w100:  rgba(255,255,255,1.00);
+      --w70:   rgba(255,255,255,0.70);
+      --w50:   rgba(255,255,255,0.50);
+      --w40:   rgba(255,255,255,0.40);
+      --w30:   rgba(255,255,255,0.30);
+      --w25:   rgba(255,255,255,0.25);
+      --w20:   rgba(255,255,255,0.20);
+      --w10:   rgba(255,255,255,0.10);
+      --w06:   rgba(255,255,255,0.06);
+      --w03:   rgba(255,255,255,0.03);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      padding: 64px 20px 80px;
+      color: var(--text);
+      background-image: radial-gradient(ellipse 60% 40% at 50% -10%, rgba(109,40,217,0.18) 0%, transparent 70%);
+    }
+
+    .container { max-width: 780px; margin: 0 auto; }
+
+    /* ── Header ─────────────────────────── */
+    .header { text-align: center; margin-bottom: 48px; }
+    .eyebrow {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--ve); margin-bottom: 14px;
+    }
+    .header h1 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-weight: 400; font-size: clamp(28px, 5vw, 44px);
+      letter-spacing: -0.02em; line-height: 1.05;
+      background: linear-gradient(180deg, #FAFAFA 0%, #A3A3A3 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 10px;
+    }
+    .header .subtitle { font-size: 14px; color: var(--w40); }
+
+    /* ── Project tags ───────────────────── */
+    .projects-row { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+    .project-tag {
+      background: linear-gradient(135deg, var(--w03) 0%, transparent 100%);
+      border: 1px solid var(--w06); border-radius: 16px;
+      padding: 16px 22px; flex: 1; min-width: 200px;
+    }
+    .pt-label { font-size: 11px; font-weight: 600; color: var(--ve); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 5px; }
+    .pt-name { font-family: 'Instrument Serif', Georgia, serif; font-size: 17px; color: var(--w70); letter-spacing: -0.01em; }
+
+    /* ── Payment card ───────────────────── */
+    .payment-card {
+      background: linear-gradient(135deg, var(--w03) 0%, transparent 100%);
+      border: 1px solid var(--w06); border-radius: 16px;
+      padding: 20px 24px; margin-bottom: 28px;
+      display: flex; gap: 0; align-items: stretch;
+    }
+    .pay-item { flex: 1; text-align: center; padding: 0 16px; position: relative; }
+    .pay-item + .pay-item::before { content: ''; position: absolute; left: 0; top: 10%; height: 80%; width: 1px; background: var(--w10); }
+    .pay-label { font-size: 11px; font-weight: 600; color: var(--ve); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+    .pay-pct { font-family: 'Instrument Serif', Georgia, serif; font-size: 28px; color: var(--white); letter-spacing: -0.02em; margin-bottom: 4px; }
+    .pay-desc { font-size: 11px; color: var(--w40); line-height: 1.4; }
+
+    /* ── Overall progress ───────────────── */
+    .overall-card {
+      background: linear-gradient(135deg, var(--w03) 0%, transparent 100%);
+      border: 1px solid var(--w06); border-radius: 16px;
+      padding: 24px 28px; margin-bottom: 40px;
+    }
+    .oc-label { font-size: 11px; font-weight: 600; color: var(--ve); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 8px; }
+    .pct { font-family: 'Instrument Serif', Georgia, serif; font-size: 40px; color: var(--white); letter-spacing: -0.02em; margin-bottom: 12px; }
+    .bar-track { background: var(--w10); border-radius: 99px; height: 6px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--vp), #A78BFA); }
+
+    /* ── Section eyebrow ────────────────── */
+    .section-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ve); margin-bottom: 20px; padding-left: 2px; }
+
+    /* ── Phase dividers ─────────────────── */
+    .phase-divider { display: flex; align-items: center; gap: 14px; margin: 28px 0 16px; padding-left: 40px; }
+    .phase-divider-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ve); white-space: nowrap; }
+    .phase-divider-line { flex: 1; height: 1px; background: var(--w06); }
+
+    /* ── Timeline ───────────────────────── */
+    .timeline { position: relative; padding-left: 40px; margin-bottom: 48px; }
+    .timeline::before { content: ''; position: absolute; left: 13px; top: 8px; bottom: 8px; width: 1px; background: var(--w10); }
+
+    .milestone { position: relative; margin-bottom: 10px; }
+    .milestone:last-child { margin-bottom: 0; }
+
+    .dot {
+      position: absolute; left: -34px; top: 22px;
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; z-index: 1;
+    }
+    .dot.done    { background: var(--white); color: var(--bg); }
+    .dot.inprog  { background: transparent; border: 1.5px solid var(--ve); color: var(--ve); font-size: 13px; }
+    .dot.pending { background: transparent; border: 1.5px solid var(--w20); }
+
+    /* ── Milestone card ─────────────────── */
+    .m-card {
+      background: linear-gradient(135deg, var(--w03) 0%, transparent 100%);
+      border: 1px solid var(--w06); border-radius: 16px;
+      overflow: hidden;
+    }
+    .m-card.done-card    { border-left: 1px solid var(--w30); }
+    .m-card.inprog-card  { border-left: 1px solid rgba(167,139,250,0.5); }
+    .m-card.pending-card { border-left: 1px solid var(--w06); }
+
+    /* Blinking active card */
+    .m-card.active-card {
+      border: 1px solid rgba(167,139,250,0.35);
+      border-left: 1px solid rgba(167,139,250,0.7);
+      background: linear-gradient(135deg, rgba(109,40,217,0.08) 0%, transparent 100%);
+      animation: card-pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes card-pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(109,40,217,0.0); }
+      50%      { box-shadow: 0 0 18px 2px rgba(109,40,217,0.22); }
+    }
+
+    /* Card header row (always visible) */
+    .m-header {
+      padding: 13px 18px;
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+    }
+    .m-text { flex: 1; }
+    .m-title { font-size: 14px; font-weight: 600; color: var(--w70); margin-bottom: 3px; }
+    .m-card.done-card   .m-title { color: var(--w100); }
+    .m-card.active-card .m-title { color: var(--w100); }
+    .m-date { font-size: 12px; color: var(--w40); }
+
+    .m-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+    /* ── Badges ─────────────────────────── */
+    .badge {
+      font-size: 10px; font-weight: 600; padding: 4px 12px;
+      border-radius: 99px; white-space: nowrap;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .badge.done    { background: var(--w10); color: var(--white); border: 1px solid var(--w20); }
+    .badge.pending { background: transparent; color: var(--w30); border: 1px solid var(--w10); }
+    .badge.pay     { background: rgba(109,40,217,0.12); color: #A78BFA; border: 1px solid rgba(109,40,217,0.3); }
+    .badge.active  {
+      background: rgba(109,40,217,0.18); color: #c4b5fd;
+      border: 1px solid rgba(167,139,250,0.5);
+      animation: badge-blink 1.2s ease-in-out infinite;
+    }
+    @keyframes badge-blink { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+    /* ── Dropdown toggle button ─────────── */
+    .toggle-btn {
+      background: var(--w06); border: 1px solid var(--w10);
+      border-radius: 8px; width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .toggle-btn:hover { background: var(--w10); }
+    .toggle-btn svg { width: 12px; height: 12px; stroke: var(--w50); transition: transform 0.25s; }
+    .milestone.open .toggle-btn svg { transform: rotate(180deg); }
+
+    /* ── Subtasks panel ─────────────────── */
+    .subtasks {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+      border-top: 0px solid var(--w06);
+    }
+    .milestone.open .subtasks {
+      max-height: 600px;
+      border-top: 1px solid var(--w06);
+    }
+    .subtask-inner { padding: 12px 18px 16px; display: flex; flex-direction: column; gap: 8px; }
+
+    .subtask {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 12px;
+      background: var(--w03); border: 1px solid var(--w06);
+      border-radius: 10px;
+    }
+    .subtask-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--w20); flex-shrink: 0;
+    }
+    .subtask-text { font-size: 12px; font-weight: 500; color: var(--w50); }
+
+    /* ── Footer ─────────────────────────── */
+    .footer { text-align: center; padding-top: 8px; }
+    .footer-wordmark { font-family: 'Instrument Serif', Georgia, serif; font-size: 20px; color: var(--w30); margin-bottom: 6px; letter-spacing: -0.02em; }
+    .footer-copy { font-size: 12px; color: var(--w25); }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">GenosAI &nbsp;×&nbsp; AquaTechnic</div>
+    <h1>Project Progress Tracker</h1>
+    <div class="subtitle">Last updated: 15 May 2026</div>
+  </div>
+
+  <!-- Projects -->
+  <div class="projects-row">
+    <div class="project-tag">
+      <div class="pt-label">Project 01 &mdash; First</div>
+      <div class="pt-name">AquaTechnic Website</div>
+    </div>
+    <div class="project-tag">
+      <div class="pt-label">Project 02 &mdash; Second</div>
+      <div class="pt-name">AquaTechnic WhatsApp Ops</div>
+    </div>
+  </div>
+
+  <!-- Payment -->
+  <div class="payment-card">
+    <div class="pay-item">
+      <div class="pay-label">Advance</div>
+      <div class="pay-pct">20%</div>
+      <div class="pay-desc">On project<br>go-ahead</div>
+    </div>
+    <div class="pay-item">
+      <div class="pay-label">Milestone</div>
+      <div class="pay-pct">40%</div>
+      <div class="pay-desc">On Website<br>delivery</div>
+    </div>
+    <div class="pay-item">
+      <div class="pay-label">Final</div>
+      <div class="pay-pct">40%</div>
+      <div class="pay-desc">On final<br>handover</div>
+    </div>
+  </div>
+
+  <!-- Overall progress -->
+  <div class="overall-card">
+    <div class="oc-label">Overall Progress</div>
+    <div class="pct">0%</div>
+    <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+  </div>
+
+  <!-- ═══════════════ TIMELINE ═══════════════ -->
+  <div class="section-eyebrow">Project Milestones</div>
+  <div class="timeline">
+
+    <!-- Discovery Call -->
+    <div class="milestone">
+      <div class="dot done">&#10003;</div>
+      <div class="m-card done-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Discovery Call</div>
+            <div class="m-date">13 May 2026 &mdash; GenosAI understood the requirements</div>
+          </div>
+          <div class="m-right"><span class="badge done">Done</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Overview Sent -->
+    <div class="milestone">
+      <div class="dot done">&#10003;</div>
+      <div class="m-card done-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Project Overview Sent</div>
+            <div class="m-date">15 May 2026</div>
+          </div>
+          <div class="m-right"><span class="badge done">Done</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CURRENT — Commercials (blinking) -->
+    <div class="milestone">
+      <div class="dot inprog">&#8250;</div>
+      <div class="m-card active-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Commercials Discussion &amp; Client Confirmation</div>
+            <div class="m-date">Scheduled: 18 May 2026</div>
+          </div>
+          <div class="m-right"><span class="badge active">In Progress</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advance Payment -->
+    <div class="milestone">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">20% Advance Payment Received</div>
+            <div class="m-date">Pending</div>
+          </div>
+          <div class="m-right"><span class="badge pending">Pending</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PROJECT 01 — WEBSITE ═══ -->
+    <div class="phase-divider">
+      <span class="phase-divider-label">Project 01 &mdash; AquaTechnic Website &nbsp;·&nbsp; 3–7 weeks</span>
+      <div class="phase-divider-line"></div>
+    </div>
+
+    <!-- Website Phase 1 -->
+    <div class="milestone" id="wp1">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Phase 1 &mdash; Luxury Website Redesign</div>
+            <div class="m-date">Week 1–2</div>
+          </div>
+          <div class="m-right">
+            <span class="badge pending">Upcoming</span>
+            <button class="toggle-btn" onclick="toggleSub('wp1')">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask-inner">
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Design system &amp; UI kit</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Cinematic homepage</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Project showcase pages</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Services &amp; about pages</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Mobile &amp; performance optimisation</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Soft launch</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Website Phase 2 -->
+    <div class="milestone" id="wp2">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Phase 2 &mdash; Interactive Cost Calculator</div>
+            <div class="m-date">Week 3–5</div>
+          </div>
+          <div class="m-right">
+            <span class="badge pending">Upcoming</span>
+            <button class="toggle-btn" onclick="toggleSub('wp2')">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask-inner">
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Calculator flow design</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Pricing logic &amp; ranges</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Inquiry capture form</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Lead routing</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Admin view of submissions</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">A/B copy tuning</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Website Phase 3 -->
+    <div class="milestone" id="wp3">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Phase 3 &mdash; WhatsApp &amp; Smart Assistant</div>
+            <div class="m-date">Week 5–7</div>
+          </div>
+          <div class="m-right">
+            <span class="badge pending">Upcoming</span>
+            <button class="toggle-btn" onclick="toggleSub('wp3')">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask-inner">
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">WhatsApp integration</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Smart chat assistant</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Calculator &rarr; WhatsApp flow</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Automated follow-ups</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Handover dashboard</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Training &amp; handover</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Website testing -->
+    <div class="milestone">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Testing &mdash; GenosAI Internal (Website)</div>
+            <div class="m-date">To be scheduled</div>
+          </div>
+          <div class="m-right"><span class="badge pending">Upcoming</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="milestone">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Testing &mdash; Client UAT (Website)</div>
+            <div class="m-date">To be scheduled</div>
+          </div>
+          <div class="m-right"><span class="badge pending">Upcoming</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="milestone">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Website Delivery &mdash; 40% Payment Due</div>
+            <div class="m-date">To be scheduled</div>
+          </div>
+          <div class="m-right"><span class="badge pay">Payment</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PROJECT 02 — WHATSAPP OPS ═══ -->
+    <div class="phase-divider">
+      <span class="phase-divider-label">Project 02 &mdash; WhatsApp Ops &nbsp;·&nbsp; 6–10 weeks</span>
+      <div class="phase-divider-line"></div>
+    </div>
+
+    <!-- WA Phase 1 -->
+    <div class="milestone" id="op1">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Phase 1 &mdash; Core WhatsApp Operations</div>
+            <div class="m-date">Week 1–3</div>
+          </div>
+          <div class="m-right">
+            <span class="badge pending">Upcoming</span>
+            <button class="toggle-btn" onclick="toggleSub('op1')">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask-inner">
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Employee onboarding</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Site &amp; team setup</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Daily check-in flow</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Basic task assignment</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Report intake system</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Pilot with 2–3 sites</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WA Phase 2 -->
+    <div class="milestone" id="op2">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Phase 2 &mdash; Advanced Dashboard &amp; Reporting</div>
+            <div class="m-date">Week 4–7</div>
+          </div>
+          <div class="m-right">
+            <span class="badge pending">Upcoming</span>
+            <button class="toggle-btn" onclick="toggleSub('op2')">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask-inner">
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Owner dashboard</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Live site status view</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Delay &amp; miss alerts</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Report search &amp; archive</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Maintenance scheduling</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">AMC tracking</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WA Phase 3 -->
+    <div class="milestone" id="op3">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Phase 3 &mdash; Advanced Automation &amp; Scaling</div>
+            <div class="m-date">Week 8–10</div>
+          </div>
+          <div class="m-right">
+            <span class="badge pending">Upcoming</span>
+            <button class="toggle-btn" onclick="toggleSub('op3')">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="subtasks">
+          <div class="subtask-inner">
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Client update automation</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Renewal reminders</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Routing &amp; scheduling optimisation</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Multi-team rollout</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Advanced analytics</span></div>
+            <div class="subtask"><div class="subtask-dot"></div><span class="subtask-text">Ongoing support</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WA testing -->
+    <div class="milestone">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Testing &mdash; GenosAI Internal (WhatsApp Ops)</div>
+            <div class="m-date">To be scheduled</div>
+          </div>
+          <div class="m-right"><span class="badge pending">Upcoming</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="milestone">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Testing &mdash; Client UAT (WhatsApp Ops)</div>
+            <div class="m-date">To be scheduled</div>
+          </div>
+          <div class="m-right"><span class="badge pending">Upcoming</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CLOSING ═══ -->
+    <div class="phase-divider">
+      <span class="phase-divider-label">Project Closing</span>
+      <div class="phase-divider-line"></div>
+    </div>
+
+    <div class="milestone">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Observation Period</div>
+            <div class="m-date">To be scheduled</div>
+          </div>
+          <div class="m-right"><span class="badge pending">Upcoming</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="milestone">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Updates &amp; Revisions (if any)</div>
+            <div class="m-date">As required</div>
+          </div>
+          <div class="m-right"><span class="badge pending">Upcoming</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="milestone">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Final Handover &mdash; 40% Final Payment Due</div>
+            <div class="m-date">To be scheduled</div>
+          </div>
+          <div class="m-right"><span class="badge pay">Payment</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="milestone">
+      <div class="dot pending"></div>
+      <div class="m-card pending-card">
+        <div class="m-header">
+          <div class="m-text">
+            <div class="m-title">Free Monthly Maintenance</div>
+            <div class="m-date">6 months post-handover</div>
+          </div>
+          <div class="m-right"><span class="badge pending">Upcoming</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /timeline -->
+
+  <div class="footer">
+    <div class="footer-wordmark">GenosAI</div>
+    <div class="footer-copy">Updates shared as milestones progress</div>
+  </div>
+
+</div>
+
+<script>
+  function toggleSub(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
